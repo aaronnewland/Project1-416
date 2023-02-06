@@ -8,7 +8,7 @@
 
 #define NUM_TOP_BITS 4 //top bits to extract
 #define BITMAP_SIZE 4 //size of the bitmap array
-#define SET_BIT_INDEX 17 //bit index to set 
+#define SET_BIT_INDEX 25 //bit index to set 
 #define GET_BIT_INDEX 17 //bit index to read
 
 static unsigned int myaddress = 4026544704;   // Binary  would be 1111 0000 0000 0000 0011 0010 0100 0000
@@ -34,16 +34,24 @@ static unsigned int get_top_bits(unsigned int value,  int num_bits)
 }
 
 
-// /* 
-//  * Function 2: SETTING A BIT AT AN INDEX 
-//  * Function to set a bit at "index" bitmap
-//  */
-// static void set_bit_at_index(char *bitmap, int index)
-// {
-//     //Implement your code here	
+/* 
+ * Function 2: SETTING A BIT AT AN INDEX 
+ * Function to set a bit at "index" bitmap
+ */
+static void set_bit_at_index(char *bitmap, int index)
+{
+    //Implement your code here	
 
-//     return;
-// }
+    //remember zero indexing!!! 1st byte is bitmap[0], first bit is byte[0], 
+    //17th bit is the first bit of byte 2 (3rd byte total)
+    
+    int byte = (BITMAP_SIZE * 8) / index; 
+    int remainder = (index % 8) - 1; //17 % 8 = 1 
+
+    bitmap[byte] |= 1 << remainder;
+
+    return;
+}
 
 
 // /* 
@@ -68,20 +76,26 @@ int main () {
     printf("Function 1: Outer bits value %u \n", outer_bits_value); 
     printf("\n");
 
-    // /* 
-    //  * Function 2 and 3: Checking if a bit is set or not
-    //  */
-    // char *bitmap = (char *)malloc(BITMAP_SIZE);  //We can store 32 bits (4*8-bit per character)
-    // memset(bitmap,0, BITMAP_SIZE); //clear everything
+    /* 
+     * Function 2 and 3: Checking if a bit is set or not
+     */
+    char *bitmap = (char *)malloc(BITMAP_SIZE);  //We can store 32 bits (4*8-bit per character)
+    memset(bitmap,0, BITMAP_SIZE); //clear everything
     
-    // /* 
-    //  * Let's try to set the bit 
-    //  */
-    // set_bit_at_index(bitmap, SET_BIT_INDEX);
+    /* 
+     * Let's try to set the bit 
+     */
+    set_bit_at_index(bitmap, SET_BIT_INDEX);
+
+    //DEBUG
+    printf("block 0: %u\n", bitmap[0]);
+    printf("block 1: %u\n", bitmap[1]);
+    printf("block 2: %u\n", bitmap[2]);
+    printf("block 3: %u\n", bitmap[3]);
     
-    // /* 
-    //  * Let's try to read bit)
-    //  */
+    /* 
+     * Let's try to read bit)
+     */
     // printf("Function 3: The value at %dth location %d\n", 
     //         GET_BIT_INDEX, get_bit_at_index(bitmap, GET_BIT_INDEX));
             
