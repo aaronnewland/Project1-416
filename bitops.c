@@ -60,16 +60,26 @@ static void set_bit_at_index(char *bitmap, int index)
 }
 
 
-// /* 
-//  * Function 3: GETTING A BIT AT AN INDEX 
-//  * Function to get a bit at "index"
-//  */
-// static int get_bit_at_index(char *bitmap, int index)
-// {
-//     //Get to the location in the character bitmap array
-//     //Implement your code here
+/* 
+ * Function 3: GETTING A BIT AT AN INDEX 
+ * Function to get a bit at "index"
+ */
+static int get_bit_at_index(char *bitmap, int index)
+{
+    //TODO: More testing.
+
+    //Get to the location in the character bitmap array
+    //Find block and index needed to set.
+    int block;
+    block = index / 8;
+    index = (index % 8) - 1;
+
+    //Use bitwise OR with a 0 to get bit from bitmap.
+    unsigned int val = bitmap[block] >> index;
+
+    return val;
     
-// }
+}
 
 
 int main () {
@@ -93,11 +103,11 @@ int main () {
      */
     set_bit_at_index(bitmap, SET_BIT_INDEX);
     
-    // /* 
-    //  * Let's try to read bit)
-    //  */
-    // printf("Function 3: The value at %dth location %d\n", 
-    //         GET_BIT_INDEX, get_bit_at_index(bitmap, GET_BIT_INDEX));
+    /* 
+     * Let's try to read bit)
+     */
+    printf("Function 3: The value at %dth location %d\n", 
+            GET_BIT_INDEX, get_bit_at_index(bitmap, GET_BIT_INDEX));
             
     return 0;
 }
