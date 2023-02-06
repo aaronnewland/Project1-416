@@ -28,22 +28,36 @@ static unsigned int get_top_bits(unsigned int value,  int num_bits)
     //Left shift by num_bits to get number of bits needed.
     //Subtract 1 to set all bits to 1.
     bit_mask = (1 << num_bits) - 1;
-    printf("bit_mask: %X : %u\n", bit_mask, bit_mask);
 
     return (value >> (32 - num_bits)) & bit_mask;
 }
 
 
-// /* 
-//  * Function 2: SETTING A BIT AT AN INDEX 
-//  * Function to set a bit at "index" bitmap
-//  */
-// static void set_bit_at_index(char *bitmap, int index)
-// {
-//     //Implement your code here	
+/* 
+ * Function 2: SETTING A BIT AT AN INDEX 
+ * Function to set a bit at "index" bitmap
+ */
+static void set_bit_at_index(char *bitmap, int index)
+{
+    //TODO: More testing.
 
-//     return;
-// }
+    //Find block and index needed to set.
+    int block;
+    block = index / 8;
+    index = (index % 8) - 1;
+
+    //Create bit mask.
+    unsigned int bit_mask;
+    bit_mask = 1 << index;
+
+    //Use bitwise OR to set only if bit is not previously set.
+    unsigned int val = bitmap[block] | bit_mask;
+
+    //Return new value back in modified block of bitmap.
+    bitmap[block] = val;
+
+    return;
+}
 
 
 // /* 
@@ -68,16 +82,16 @@ int main () {
     printf("Function 1: Outer bits value %u \n", outer_bits_value); 
     printf("\n");
 
-    // /* 
-    //  * Function 2 and 3: Checking if a bit is set or not
-    //  */
-    // char *bitmap = (char *)malloc(BITMAP_SIZE);  //We can store 32 bits (4*8-bit per character)
-    // memset(bitmap,0, BITMAP_SIZE); //clear everything
+    /* 
+     * Function 2 and 3: Checking if a bit is set or not
+     */
+    char *bitmap = (char *)malloc(BITMAP_SIZE);  //We can store 32 bits (4*8-bit per character)
+    memset(bitmap,0, BITMAP_SIZE); //clear everything
     
-    // /* 
-    //  * Let's try to set the bit 
-    //  */
-    // set_bit_at_index(bitmap, SET_BIT_INDEX);
+    /* 
+     * Let's try to set the bit 
+     */
+    set_bit_at_index(bitmap, SET_BIT_INDEX);
     
     // /* 
     //  * Let's try to read bit)
