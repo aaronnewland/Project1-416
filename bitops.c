@@ -1,6 +1,6 @@
 /*
-* Add NetID and names of all project partners
-*
+* @author asn89 Aaron Newland
+* //TODO: Add Tyler NetID
 */
 #include <stdio.h>
 #include <string.h>
