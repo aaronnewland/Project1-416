@@ -8,7 +8,7 @@
 
 #define NUM_TOP_BITS 4 //top bits to extract
 #define BITMAP_SIZE 4 //size of the bitmap array
-#define SET_BIT_INDEX 25 //bit index to set 
+#define SET_BIT_INDEX 17 //bit index to set 
 #define GET_BIT_INDEX 17 //bit index to read
 
 #define DEBUG 0
@@ -84,7 +84,7 @@ static int get_bit_at_index(char *bitmap, int index)
     //TODO: More testing.
 
     //Get to the location in the character bitmap array
-    //Find block and index needed to set.
+    //Find block and index needed to read.
     int block;
     block = index / 8;
     index = (index % 8) - 1;

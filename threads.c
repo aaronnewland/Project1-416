@@ -1,6 +1,6 @@
 /*
-* Add NetID and names of all project partners
-*
+* @author asn89 Aaron Newland
+* //TODO: Add Tyler NetID
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,11 +23,10 @@ void *add_counter(void *arg) {
 
     int i;
 
-    /* Add thread synchronizaiton logic in this function */	
-
     for(i = 0; i < loop; i++){
-
-	x = x + 1;
+        pthread_mutex_lock(&mutex);
+        x = x + 1;
+        pthread_mutex_unlock(&mutex);
     }
 
     return NULL;
@@ -51,11 +50,23 @@ int main(int argc, char *argv[]) {
 
     printf("Going to run four threads to increment x up to %d\n", 4 * loop);
 
-    /* Implement Code Here */
+    //Initialize mutex.
+    pthread_mutex_init(&mutex, NULL);
 
+    //Create worker threads.
+    pthread_create(&t1, NULL, add_counter, NULL);
+    pthread_create(&t2, NULL, add_counter, NULL);
+    pthread_create(&t3, NULL, add_counter, NULL);
+    pthread_create(&t4, NULL, add_counter, NULL);
 
-    /* Make sure to join the threads */
+    //Join the threads
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    pthread_join(t3, NULL);
+    pthread_join(t4, NULL);
 
+    //Destroy mutex.
+    pthread_mutex_destroy(&mutex);
 
     printf("The final value of x is %d\n", x);
 
