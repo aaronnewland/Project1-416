@@ -8,8 +8,10 @@
 
 #define NUM_TOP_BITS 4 //top bits to extract
 #define BITMAP_SIZE 4 //size of the bitmap array
-#define SET_BIT_INDEX 17 //bit index to set 
+#define SET_BIT_INDEX 25 //bit index to set 
 #define GET_BIT_INDEX 17 //bit index to read
+
+#define DEBUG 0
 
 static unsigned int myaddress = 4026544704;   // Binary  would be 1111 0000 0000 0000 0011 0010 0100 0000
 
@@ -39,6 +41,19 @@ static unsigned int get_top_bits(unsigned int value,  int num_bits)
  */
 static void set_bit_at_index(char *bitmap, int index)
 {
+    /*
+    //Tyler solution
+    //Implement your code here	
+
+    //remember zero indexing!!! 1st byte is bitmap[0], first bit is byte[0], 
+    //17th bit is the first bit of byte 2 (3rd byte total)
+    
+    int byte = (BITMAP_SIZE * 8) / index; 
+    int remainder = (index % 8) - 1; //17 % 8 = 1 
+
+    bitmap[byte] |= 1 << remainder;
+    */
+    
     //TODO: More testing.
 
     //Find block and index needed to set.
@@ -102,6 +117,14 @@ int main () {
      * Let's try to set the bit 
      */
     set_bit_at_index(bitmap, SET_BIT_INDEX);
+
+    //DEBUG: SET 'DEBUG' MACRO TO 1
+    if (DEBUG) {
+        printf("block 0: %u\n", bitmap[0]);
+        printf("block 1: %u\n", bitmap[1]);
+        printf("block 2: %u\n", bitmap[2]);
+        printf("block 3: %u\n", bitmap[3]);
+    }
     
     /* 
      * Let's try to read bit)
