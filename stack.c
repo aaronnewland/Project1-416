@@ -13,6 +13,13 @@
 void signal_handle(int signalno) {
 
     printf("handling segmentation fault!\n");
+    //address of param is close to address to return
+    //we need to go up the stack to the point where the return address will 
+    //instead send us to the line after the segfault
+    int *address = &signalno;
+    
+    int *address2 = address + 4; //access address containing return address to main()
+    *address2 += 2; //increment two instructions (after segfault)
 
     /* Step 2: Handle segfault and change the stack*/
 }
@@ -20,7 +27,7 @@ void signal_handle(int signalno) {
 int main(int argc, char *argv[]) {
 
     int r2 = 0;
-q
+
     /* Step 1: Register signal handler first*/
     signal(SIGSEGV, signal_handle);
 
