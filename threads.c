@@ -1,6 +1,8 @@
 /*
 * @author asn89 Aaron Newland
 * @author tjr151 Tyler Radziemski
+* CS 416
+* candle, frost
 */
 #include <stdio.h>
 #include <stdlib.h>
