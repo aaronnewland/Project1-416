@@ -1,0 +1,21 @@
+asn89 Aaron Newland
+tjr151 Tyler Radziemski
+
+1
+1.1 In the process for stack.c, there are up to three stack frames (at the time of the segfault). 
+These stack frames are for the main function, the signal_handle function, and a third kernel operation that
+will return the process back to the main function after signal_handle finishes. Within signal_handle's stack,
+there is the address of the parameter- signalno -and a return address to the kernel function. In the kernel
+function, the most significant thing in its stack is a return address to the main function. 
+
+1.2 Using a combination of the GDB commands "info frame" and "backtrace" we found that there are multiple
+stack frames for each function, and both signal_handle and the kernel function held return adresses to separate
+functions (namely, that signal_handle would return to the kernel operation and from there back to main). So, 
+with these commands we found the address for the saved eip register in the kernel function that would return to
+main. 
+
+1.3 Using the address found for the saved eip in the kernel operation, we recognized the offset from the address
+of signalno (the parameter we could access using a local variable in signal_handle), which we found to be 15 * 4
+bytes. Now that our local variable pointed to the saved eip that pointed to the program counter for main, we 
+incremented that by 2 so that when signal_handle finished, main returned two bytes after the original instruction
+that created the segfault, allowing the process to continue.
