@@ -13,6 +13,19 @@
  * Your goal must be to change the stack frame of caller (main function)
  * such that you get to the line after "r2 = *( (int *) 0 )"
  */
+ /*
+*  Where is the program counter, and how did you use GDB to locate the PC? 3. 
+*  What were the changes to get the desired result?
+*  
+*  From main() a signal handler is called, by getting information about the stack
+*  frame from gdb (using info frame) the stack frame of main() has saved the contents
+*  of its program counter at a memory address. By examining this address the adress
+*  of the program counter from main() is retrieved. Once the address of main()'s eip
+*  was found, by stepping through the program in gdb inside the signal handler the integer
+*  value of singalno could be found through an lea operation to the eax register.
+*  Through examining the contents of eax the adress of signalno was obtained.
+*  Then, through finding the difference between the two numbers the offset was obtained as well.
+*/
 void signal_handle(int signalno) {
     int* temp;
     temp = &signalno;
